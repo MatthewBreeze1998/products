@@ -12,7 +12,6 @@ namespace Could_System_dev_ops.Repo
 
         private List<ProductsModel> _ProductsModelsList;
 
-        private List<ReSaleModel> _ReSaleList;
 
         public FakeProductsRepo()
         {
@@ -28,6 +27,7 @@ namespace Could_System_dev_ops.Repo
         
         public ProductsModel CreateProduct(ProductsModel products)
         {
+            
             _ProductsModelsList.Add(products);
             return products;
         }
