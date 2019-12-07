@@ -11,6 +11,7 @@ namespace Could_System_dev_ops.Repo
     {
 
         ProductsModel UpdateStock(int id, int increase);
+      
         ProductsModel CreateProduct(Models.ProductsModel products);
 
         ProductsModel GetProduct(int id);

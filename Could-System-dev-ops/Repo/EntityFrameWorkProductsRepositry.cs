@@ -29,20 +29,20 @@ namespace Could_System_dev_ops.Repo
         {
             return _context.Products;
         }
-    public bool UpdateObject(ProductsModel Object)
+
+        public bool UpdateObject(ProductsModel Object, bool Return)
         {
             try
             {
                 _context.Products.Update(Object);
                 _context.SaveChanges();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return false;
             }
 
             return true;
         }
-        
     }
 }
