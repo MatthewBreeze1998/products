@@ -8,7 +8,7 @@ namespace Could_System_dev_ops.Repo
 
 
 
-        bool UpdateObject(ProductsModel Object, bool Return);
+        bool UpdateObject(ProductsModel Object);
 
 
         ProductsModel CreateObject(ProductsModel Object);

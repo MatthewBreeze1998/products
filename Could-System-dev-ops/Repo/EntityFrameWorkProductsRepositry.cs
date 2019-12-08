@@ -30,7 +30,7 @@ namespace Could_System_dev_ops.Repo
             return _context.Products;
         }
 
-        public bool UpdateObject(ProductsModel Object, bool Return)
+        public bool UpdateObject(ProductsModel Object)
         {
             try
             {
