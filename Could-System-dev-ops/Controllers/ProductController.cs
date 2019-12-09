@@ -13,9 +13,6 @@ namespace Could_System_dev_ops.Controllers
     [Route("api/Products") ]
     public class ProductsController : Controller
     {
-
-
-
         private ProductsRepo _ProductsRepo;
 
         public ProductsController(ProductsRepo Products)
@@ -34,7 +31,6 @@ namespace Could_System_dev_ops.Controllers
 
             _ProductsRepo.CreateProduct(products);
             return CreatedAtAction(nameof(getProducts), new { id = products.ProductId}, products);
-
 
         }
         [Route("GetProduct/{id}")]
@@ -63,10 +59,8 @@ namespace Could_System_dev_ops.Controllers
         [HttpPost]
         public ActionResult<ProductsModel> SetResale(int id)
         {
-
             _ProductsRepo.SetResale(id);
             return CreatedAtAction(nameof(getProducts), new { id });
-
         }
 
 

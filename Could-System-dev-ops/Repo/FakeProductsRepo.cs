@@ -11,15 +11,15 @@ namespace Could_System_dev_ops.Repo
     {
 
         private List<ProductsModel> _ProductsModelsList;
-
+        private List<ReSaleMetaData> _ReSaleList;
 
         public FakeProductsRepo()
         {
             _ProductsModelsList = new List<ProductsModel>()
             {
                 new ProductsModel() {ProductId = 1,ProductName = "levi jeans", Description  =  "blue Jeans", Price = 123.12, StockLevel = 19},
-                new ProductsModel() {ProductId = 1,ProductName = "Black desk", Description  =  "Black desk", Price = 11.4 ,StockLevel = 3},
-                new ProductsModel() {ProductId = 1,ProductName = "Moniter", Description  =  "24' lg 1080p", Price = 341.41 ,StockLevel = 19}
+                new ProductsModel() {ProductId = 2,ProductName = "Black desk", Description  =  "Black desk", Price = 11.4 ,StockLevel = 3},
+                new ProductsModel() {ProductId = 3,ProductName = "Moniter", Description  =  "24' lg 1080p", Price = 341.41 ,StockLevel = 19}
             };
         }
 
@@ -42,14 +42,17 @@ namespace Could_System_dev_ops.Repo
             return _ProductsModelsList.AsEnumerable<ProductsModel>();
         }
 
-        public ProductsModel SetResale(int id)
+        public ProductsModel SetResale(ReSaleMetaData ReSalePrice)
         {
-            ReSaleModel ReSalePrice = _ReSaleList.FirstOrDefault(x => x.ProductId == id);
+            
+
+            ReSaleMetaData ReSalePrice = _ReSaleList.FirstOrDefault(x => x.ProductId == id);
             ProductsModel price = _ProductsModelsList.FirstOrDefault(b => b.ProductId == id);
 
             price.Price = ReSalePrice.NewPrice;
+            
             _ProductsModelsList.Insert(_ProductsModelsList.IndexOf(_ProductsModelsList.FirstOrDefault(x => id == x.ProductId)), price);
-
+            
             return price;
         }
 
