@@ -1,23 +1,39 @@
 ﻿using Could_System_dev_ops.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Could_System_dev_ops.Repo
 {
-    public interface ProductsRepo
-
+  public class LocalHostReSaleService
     {
 
-        ProductsModel UpdateStock(int id, int increase);
-      
-        ProductsModel CreateProduct(Models.ProductsModel products);
+        private readonly HttpClient _client;
 
-        ProductsModel GetProduct(int id);
+        public LocalHostReSaleService(HttpClient client)
+        {
+            client.BaseAddress = new Uri("https://localhost:5001");
+            client.Timeout = TimeSpan.FromSeconds(5);
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
+        }
+        
+        public async Task<ReSaleMetaData> GetReSale(ReSaleMetaData reSale)
+        {
+            string uri = "api/ReSale/GetReSale";
+            HttpResponseMessage responseMessage = await _client.PostAsJsonAsync(uri, reSale);
+            string responseContent = await responseMessage.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<ReSaleMetaData>(responseContent);
+            
+        }
+            
 
-        IEnumerable<Models.ProductsModel> GetAllProduct();
 
-        ProductsModel SetResale(int id);
+
+
     }
+        
+       
 }
