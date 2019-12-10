@@ -11,10 +11,11 @@ using Microsoft.EntityFrameworkCore;
 namespace Could_System_dev_ops.Controllers
 {
     [Route("api/Products") ]
+    [ApiController]
     public class ProductsController : Controller
     {
         private ProductsRepo _ProductsRepo;
-
+        private ReSaleReSale _ReSaleList;
         public ProductsController(ProductsRepo Products)
         {
             _ProductsRepo = Products;
@@ -47,6 +48,14 @@ namespace Could_System_dev_ops.Controllers
             return createProdcuts;
         }
         
+        [Route("GetAllProducts")]
+        [HttpGet]
+        public IEnumerable<ProductsModel> GetAllProducts()
+        {
+            IEnumerable<ProductsModel> All = _ProductsRepo.GetAllProduct();
+            return All; 
+        }
+
         [Route("UpdateStock/{id,NewStock}")]
         [HttpPost]
         public ActionResult<ProductsModel> UpdateStock(int id, int NewStock)

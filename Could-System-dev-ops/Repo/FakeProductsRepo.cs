@@ -7,11 +7,11 @@ using Could_System_dev_ops.Models;
 namespace Could_System_dev_ops.Repo
 {
     public class FakeProductsRepo : ProductsRepo
-
+    
     {
 
         private List<ProductsModel> _ProductsModelsList;
-        private List<ReSaleMetaData> _ReSaleList;
+        
 
         public FakeProductsRepo()
         {
