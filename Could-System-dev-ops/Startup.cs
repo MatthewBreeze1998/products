@@ -18,12 +18,14 @@ namespace Could_System_dev_ops
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
+            CurrentEnvironment = env;
         }
 
         public IConfiguration Configuration { get; }
+        public IHostingEnvironment CurrentEnvironment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -39,7 +41,13 @@ namespace Could_System_dev_ops
             
             if(CurrentEnvironment.IsDevelopment())
             {
-
+                services.AddSingleton<ProductsRepo, FakeProductsRepo>();
+                services.AddSingleton<ReSaleService, SuccessResaleService>();
+            }
+            else
+            {
+                services.AddSingleton<ProductsRepo, FakeProductsRepo>();
+                services.AddHttpClient<ReSaleService, LocalHostReSaleService>();
             }
         }
 

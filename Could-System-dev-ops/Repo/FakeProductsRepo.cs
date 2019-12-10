@@ -42,19 +42,8 @@ namespace Could_System_dev_ops.Repo
             return _ProductsModelsList.AsEnumerable<ProductsModel>();
         }
 
-        public ProductsModel SetResale(ReSaleMetaData ReSalePrice)
-        {
-            
 
-            ReSaleMetaData ReSalePrice = _ReSaleList.FirstOrDefault(x => x.ProductId == id);
-            ProductsModel price = _ProductsModelsList.FirstOrDefault(b => b.ProductId == id);
 
-            price.Price = ReSalePrice.NewPrice;
-            
-            _ProductsModelsList.Insert(_ProductsModelsList.IndexOf(_ProductsModelsList.FirstOrDefault(x => id == x.ProductId)), price);
-            
-            return price;
-        }
 
         public ProductsModel UpdateStock(int id, int increase)
         {

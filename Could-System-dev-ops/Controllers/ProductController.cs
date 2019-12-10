@@ -15,10 +15,11 @@ namespace Could_System_dev_ops.Controllers
     public class ProductsController : Controller
     {
         private ProductsRepo _ProductsRepo;
-        private ReSaleReSale _ReSaleList;
-        public ProductsController(ProductsRepo Products)
+        private ReSaleService _ReSaleList;
+        public ProductsController(ProductsRepo Products, ReSaleService reSale )
         {
             _ProductsRepo = Products;
+            _ReSaleList = reSale;
         }
         [Route("CreatProduct/{product}")]
         [HttpPost]

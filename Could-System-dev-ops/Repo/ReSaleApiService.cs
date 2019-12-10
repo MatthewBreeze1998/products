@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Could_System_dev_ops.Repo
 {
-  public class LocalHostReSaleService
+  public class LocalHostReSaleService : ReSaleService
     {
 
         private readonly HttpClient _client;
@@ -22,7 +22,7 @@ namespace Could_System_dev_ops.Repo
         
         public async Task<ReSaleMetaData> GetReSale(ReSaleMetaData reSale)
         {
-            string uri = "api/ReSale/GetReSale";
+            string uri = "api/ReSale/AllReSale";
             HttpResponseMessage responseMessage = await _client.PostAsJsonAsync(uri, reSale);
             string responseContent = await responseMessage.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<ReSaleMetaData>(responseContent);
