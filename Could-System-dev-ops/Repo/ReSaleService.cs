@@ -8,7 +8,7 @@ namespace Could_System_dev_ops.Repo
 {
     public interface ReSaleService
     {
-        Task<ReSaleMetaData> GetReSale(ReSaleMetaData reSale);
+        Task<ReSaleMetaData> GetReSale(ReSaleMetaData resale);
         
     }
 }

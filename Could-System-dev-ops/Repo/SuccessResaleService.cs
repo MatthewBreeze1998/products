@@ -8,7 +8,7 @@ namespace Could_System_dev_ops.Repo
 {
     public class SuccessResaleService : ReSaleService
     {
-        public Task<ReSaleMetaData> GetReSale(ReSaleMetaData ReSale)
+        public Task<ReSaleMetaData> GetReSale(ReSaleMetaData resale)
         {
             ReSaleMetaData reSale = null;
             return Task.FromResult(reSale);

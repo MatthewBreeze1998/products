@@ -59,18 +59,37 @@ namespace Could_System_dev_ops.Controllers
 
         [Route("UpdateStock/{id,NewStock}")]
         [HttpPost]
-        public ActionResult<ProductsModel> UpdateStock(int id, int NewStock)
+        public ActionResult<ProductsModel> UpdateStock(ProductsModel product, int NewStock)
         {     
-             _ProductsRepo.UpdateStock(id,NewStock);
-            return CreatedAtAction(nameof(getProducts), new { id });
+            if(product == null)
+            {
+                return NotFound();
+            }
+            if(NewStock < 1)
+            {
+                return NotFound();
+            }
+            product.StockLevel = product.StockLevel + NewStock;
+            return _ProductsRepo.EditProducts(product);
         }
 
+      
+        
         [Route("SetReSale/{id}")]
         [HttpPost]
-        public ActionResult<ProductsModel> SetResale(int id)
+        public ActionResult<ProductsModel> SetResale(ProductsModel products, ReSaleMetaData Resale)
         {
-            _ProductsRepo.SetResale(id);
-            return CreatedAtAction(nameof(getProducts), new { id });
+            if(Resale == null)
+            {
+                return NotFound();
+            }
+            if(products == null)
+            {
+                return NotFound();
+            }
+            _ReSaleList.GetReSale(Resale);
+            products.Price = Resale.NewPrice;
+            return _ProductsRepo.EditProducts(products);
         }
 
 

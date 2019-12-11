@@ -42,15 +42,10 @@ namespace Could_System_dev_ops.Repo
             return _ProductsModelsList.AsEnumerable<ProductsModel>();
         }
 
-
-
-
-        public ProductsModel UpdateStock(int id, int increase)
+        public ProductsModel EditProducts(ProductsModel products)
         {
-           ProductsModel Update =  _ProductsModelsList.FirstOrDefault(x => id == x.ProductId);
-           Update.StockLevel = Update.StockLevel + increase;
-           _ProductsModelsList.Insert(_ProductsModelsList.IndexOf(_ProductsModelsList.FirstOrDefault(x => id == x.ProductId)), Update);
-           return Update;
+            _ProductsModelsList[_ProductsModelsList.IndexOf(_ProductsModelsList.FirstOrDefault(x => x.ProductId == products.ProductId))] = products;
+            return products;
         }
     }
 }
