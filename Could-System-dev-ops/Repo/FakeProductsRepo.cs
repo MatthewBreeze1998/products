@@ -22,9 +22,6 @@ namespace Could_System_dev_ops.Repo
                 new ProductsModel() {ProductId = 3,ProductName = "Moniter", Description  =  "24' lg 1080p", Price = 341.41 ,StockLevel = 19}
             };
         }
-
-
-        
         public ProductsModel CreateProduct(ProductsModel products)
         {
             
