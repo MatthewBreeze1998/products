@@ -38,6 +38,8 @@ namespace Could_System_dev_ops
                 String connection = Configuration.GetConnectionString("ProductsConnectionString");
                 options.UseSqlServer(connection);
             });
+            services.AddSingleton<ProductsRepo, FakeProductsRepo>();
+           
             
             if(CurrentEnvironment.IsDevelopment())
             {
