@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Could_System_dev_ops.Controllers
 {
-    [Route("api/Products") ]
+    [Route("api/Products")]
     [ApiController]
     public class ProductsController : Controller
     {
@@ -30,11 +30,23 @@ namespace Could_System_dev_ops.Controllers
             {
                 return NotFound();
             }
-
             _ProductsRepo.CreateProduct(products);
-            return CreatedAtAction(nameof(getProducts), new { id = products.ProductId}, products);
+            return products;
 
         }
+        [Route("EditProducts")]
+        [HttpPost]
+        public ActionResult<ProductsModel> EditProduct(ProductsModel product)
+        {
+            if(product == null)
+            {
+                return NotFound();
+            }
+            _ProductsRepo.EditProducts(product);
+            return product;
+        }
+
+
         [Route("GetProduct/{id}")]
         [HttpGet]
         public ActionResult<ProductsModel> getProducts(int id)
@@ -77,17 +89,15 @@ namespace Could_System_dev_ops.Controllers
         
         [Route("SetReSale/{id}")]
         [HttpPost]
-        public ActionResult<ProductsModel> SetResale(ProductsModel products, ReSaleMetaData Resale)
+        public ActionResult<ProductsModel> SetResale(ProductsReSaleUpdate Update)
         {
-            if(Resale == null)
+            if(Update == null)
             {
                 return NotFound();
             }
-            if(products == null)
-            {
-                return NotFound();
-            }
-            _ReSaleList.GetReSale(Resale);
+
+            ProductsModel products = Update.product;
+            ReSaleMetaData Resale = Update.ReSale;
             products.Price = Resale.NewPrice;
             return _ProductsRepo.EditProducts(products);
         }
