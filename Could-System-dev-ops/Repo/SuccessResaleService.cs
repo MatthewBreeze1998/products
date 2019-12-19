@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Could_System_dev_ops.Repo
 {
-    public class SuccessResaleService : ReSaleService
+    public class SuccessResaleService : IReSaleRepositry
     {
         public Task<ReSaleMetaData> GetReSale(ReSaleMetaData resale)
         {

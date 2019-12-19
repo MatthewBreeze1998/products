@@ -14,8 +14,8 @@ namespace Could_System_dev_ops.Controllers
     [ApiController]
     public class ProductsController : Controller
     {
-        private ProductsRepo _ProductsRepo;
-        public ProductsController(ProductsRepo Products )
+        private IProductsRepositry _ProductsRepo;
+        public ProductsController(IProductsRepositry Products )
         {
             _ProductsRepo = Products;
         }

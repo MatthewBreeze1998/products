@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Could_System_dev_ops.Repo
 {
-    public interface ProductsRepo
+    public interface IProductsRepositry
 
     {
         ProductsModel CreateProduct(Models.ProductsModel products);

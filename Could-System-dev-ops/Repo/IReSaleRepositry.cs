@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Could_System_dev_ops.Repo
 {
-  public class LocalHostReSaleService : ReSaleService
+  public class LocalHostReSaleService : IReSaleRepositry
     {
 
         private readonly HttpClient _client;

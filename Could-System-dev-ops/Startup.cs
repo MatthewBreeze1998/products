@@ -38,18 +38,18 @@ namespace Could_System_dev_ops
                 String connection = Configuration.GetConnectionString("ProductsConnectionString");
                 options.UseSqlServer(connection);
             });
-            services.AddSingleton<ProductsRepo, FakeProductsRepo>();
+            services.AddSingleton<IProductsRepositry, FakeProductsRepo>();
            
             
             if(CurrentEnvironment.IsDevelopment())
             {
-                services.AddSingleton<ProductsRepo, FakeProductsRepo>();
-                services.AddSingleton<ReSaleService, SuccessResaleService>();
+                services.AddSingleton<IProductsRepositry, FakeProductsRepo>();
+                services.AddSingleton<IReSaleRepositry, SuccessResaleService>();
             }
             else
             {
-                services.AddSingleton<ProductsRepo, FakeProductsRepo>();
-                services.AddHttpClient<ReSaleService, LocalHostReSaleService>();
+                services.AddSingleton<IProductsRepositry, FakeProductsRepo>();
+                services.AddHttpClient<IReSaleRepositry, LocalHostReSaleService>();
             }
         }
 

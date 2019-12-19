@@ -6,7 +6,7 @@ using Could_System_dev_ops.Models;
 
 namespace Could_System_dev_ops.Repo
 {
-    public class FakeProductsRepo : ProductsRepo
+    public class FakeProductsRepo : IProductsRepositry
     
     {
 
