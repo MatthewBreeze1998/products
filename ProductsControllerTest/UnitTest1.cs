@@ -38,69 +38,65 @@ namespace ProductsControllerTest
 
         public void CreateProduct_validUser_ShouldObject()
         {
-
-
             Assert.IsNotNull(_ProductsRepo);
             Assert.IsNotNull(_ProductsController);
             ProductsModel product = new ProductsModel() { ProductId = 4, ProductName = "levi jeans", Description = "blue Jeans", Price = 123.12, StockLevel = 19 };
-            Assert.IsNotNull(user);
+            Assert.IsNotNull(product);
 
-            int currentMaxId = _ProductsController.getProducts().Value.Max();
+            int currentMaxId = _ProductsController.GetAllProducts().Value.Max();
             Assert.GreaterOrEqual(currentMaxId, 1);
 
             ActionResult<ProductsModel> result = _ProductsController.CreateProdcuts(product);
             Assert.IsNotNull(result);
 
-            ActionResult usersResult = result.Result;
-            Assert.AreEqual(usersResult.GetType(), typeof(CreatedAtActionResult));
+            ActionResult ProductResult = result.Result;
+            Assert.AreEqual(ProductResult.GetType(), typeof(CreatedAtActionResult));
 
-            CreatedAtActionResult createdUserResult = (CreatedAtActionResult)usersResult;
-            Assert.IsNotNull(createdUserResult);
-            Assert.AreEqual(createdUserResult.Value.GetType(), typeof(ProductsModel));
+            CreatedAtActionResult createdProductResult = (CreatedAtActionResult)ProductResult;
+            Assert.IsNotNull(createdProductResult);
+            Assert.AreEqual(createdProductResult.Value.GetType(), typeof(ProductsModel));
 
-            ProductsModel UserValue = (ProductsModel)createdUserResult.Value;
-            Assert.IsNotNull(UserValue);
+            ProductsModel ProductValue = (ProductsModel)createdProductResult.Value;
+            Assert.IsNotNull(ProductValue);
 
-            Assert.AreEqual(currentMaxId + 1, UserValue.UserId);
-            Assert.AreEqual(user.FirstName, UserValue.FirstName);
-            Assert.AreEqual(user.LastName, UserValue.LastName);
-            Assert.AreEqual(user.Email, UserValue.Email);
-            Assert.AreEqual(user.isActive, UserValue.isActive);
-            Assert.AreEqual(user.PurchaseAbility, user.PurchaseAbility);
+            Assert.AreEqual(currentMaxId + 1, ProductValue.ProductId);
+            Assert.AreEqual(product.ProductName, ProductValue.ProductName);
+            Assert.AreEqual(product.Description, ProductValue.Description);
+            Assert.AreEqual(product.Price, ProductValue.Price);
+            Assert.AreEqual(product.StockLevel, ProductValue.StockLevel);
         }
 
         [Test]
         public void CreateProduct_InvalidUser_ShouldObject()
         {
-            _userRepo = new FakeUserRepo(null);
+            _ProductsRepo = new FakeProductsRepo(null);
 
-            Assert.IsNotNull(_userRepo);
-            Assert.IsNotNull(_userController);
-            UsersModel user = new UsersModel() { UserId = 0, FirstName = "", LastName = "", Email = "", isActive = false, PurchaseAbility = false };
-            Assert.IsNotNull(user);
+            Assert.IsNotNull(_ProductsRepo);
+            Assert.IsNotNull(_ProductsController);
+            ProductsModel product = new ProductsModel() { ProductId = 0, ProductName = "", Description = "", Price = 0, StockLevel = 0 };
+            Assert.IsNotNull(product);
 
-            int currentMaxId = _userController.GetAllUsers().;
+            int currentMaxId = _ProductsController.GetAllProducts().Value.Max();
             Assert.GreaterOrEqual(currentMaxId, 1);
 
-            ActionResult<UsersModel> result = _userController.CreateUser(user);
+            ActionResult<ProductsModel> result = _ProductsController.CreateProdcuts(product);
             Assert.IsNotNull(result);
 
-            ActionResult usersResult = result.Result;
-            Assert.AreEqual(usersResult.GetType(), typeof(CreatedAtActionResult));
+            ActionResult ProductResult = result.Result;
+            Assert.AreEqual(ProductResult.GetType(), typeof(CreatedAtActionResult));
 
-            CreatedAtActionResult createdUserResult = (CreatedAtActionResult)usersResult;
-            Assert.IsNotNull(createdUserResult);
-            Assert.AreEqual(createdUserResult.Value.GetType(), typeof(UsersModel));
+            CreatedAtActionResult createdProductResult = (CreatedAtActionResult)ProductResult;
+            Assert.IsNotNull(createdProductResult);
+            Assert.AreEqual(createdProductResult.Value.GetType(), typeof(ProductsModel));
 
-            UsersModel UserValue = (UsersModel)createdUserResult.Value;
-            Assert.IsNotNull(UserValue);
+            ProductsModel ProductValue = (ProductsModel)createdProductResult.Value;
+            Assert.IsNotNull(ProductValue);
 
-            Assert.AreEqual(currentMaxId + 1, UserValue.UserId);
-            Assert.AreEqual(user.FirstName, UserValue.FirstName);
-            Assert.AreEqual(user.LastName, UserValue.LastName);
-            Assert.AreEqual(user.Email, UserValue.Email);
-            Assert.AreEqual(user.isActive, UserValue.isActive);
-            Assert.AreEqual(user.PurchaseAbility, user.PurchaseAbility);
+            Assert.AreNotEqual(currentMaxId + 1, ProductValue.ProductId);
+            Assert.AreNotEqual(product.ProductName, ProductValue.ProductName);
+            Assert.AreNotEqual(product.Description, ProductValue.Description);
+            Assert.AreNotEqual(product.Price, ProductValue.Price);
+            Assert.AreNotEqual(product.StockLevel, ProductValue.StockLevel);
         }
     }
 }
