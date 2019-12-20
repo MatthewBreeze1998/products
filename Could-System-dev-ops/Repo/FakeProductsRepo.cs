@@ -10,7 +10,7 @@ namespace Could_System_dev_ops.Repo
     
     {
 
-        private List<ProductsModel> _ProductsModelsList;
+        public List<ProductsModel> _ProductsModelsList;
         
 
         public FakeProductsRepo()

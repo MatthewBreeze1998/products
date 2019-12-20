@@ -4,6 +4,7 @@ using Could_System_dev_ops.Repo;
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 
 namespace ProductsControllerTest
@@ -11,7 +12,7 @@ namespace ProductsControllerTest
     public class ProdcutControllerTest
     {
         private HttpClient _client;
-        private IProductsRepositry _ProductsRepo;
+        private FakeProductsRepo _ProductsRepo;
         private IReSaleRepositry _ReSaleRepo;
         private ProductsController _ProductsController;
         private List<ProductsModel> _ProductsModelsList;
@@ -36,14 +37,14 @@ namespace ProductsControllerTest
 
         }
 
-        public void CreateProduct_validUser_ShouldObject()
+        public void CreateProduct_validProduct_ShouldObject()
         {
             Assert.IsNotNull(_ProductsRepo);
             Assert.IsNotNull(_ProductsController);
             ProductsModel product = new ProductsModel() { ProductId = 4, ProductName = "levi jeans", Description = "blue Jeans", Price = 123.12, StockLevel = 19 };
             Assert.IsNotNull(product);
 
-            int currentMaxId = _ProductsController.GetAllProducts().Value.Max();
+            int currentMaxId = _ProductsController.GetAllProducts().Max(x => x.ProductId);
             Assert.GreaterOrEqual(currentMaxId, 1);
 
             ActionResult<ProductsModel> result = _ProductsController.CreateProdcuts(product);
@@ -67,16 +68,16 @@ namespace ProductsControllerTest
         }
 
         [Test]
-        public void CreateProduct_InvalidUser_ShouldObject()
+        public void CreateProduct_InvalidProduct_ShouldObject()
         {
-            _ProductsRepo = new FakeProductsRepo(null);
+            _ProductsRepo._ProductsModelsList = null;
 
             Assert.IsNotNull(_ProductsRepo);
             Assert.IsNotNull(_ProductsController);
-            ProductsModel product = new ProductsModel() { ProductId = 0, ProductName = "", Description = "", Price = 0, StockLevel = 0 };
+            ProductsModel product = null; 
             Assert.IsNotNull(product);
 
-            int currentMaxId = _ProductsController.GetAllProducts().Value.Max();
+            int currentMaxId = _ProductsController.GetAllProducts().Max(x => x.ProductId);
             Assert.GreaterOrEqual(currentMaxId, 1);
 
             ActionResult<ProductsModel> result = _ProductsController.CreateProdcuts(product);
@@ -97,6 +98,30 @@ namespace ProductsControllerTest
             Assert.AreNotEqual(product.Description, ProductValue.Description);
             Assert.AreNotEqual(product.Price, ProductValue.Price);
             Assert.AreNotEqual(product.StockLevel, ProductValue.StockLevel);
+        }
+        [Test]
+        public void DeleteProduct_validProduct_ShouldObject()
+        {
+            Assert.IsNotNull(_ProductsRepo);
+            Assert.IsNotNull(_ProductsController);
+            ProductsModel product = _ProductsController.getProducts(2).Value;
+            Assert.IsNotNull(product);
+
+            
+
+            ActionResult<ProductsModel> result = _ProductsController.;
+            Assert.IsNotNull(result);
+
+            ActionResult ProductResult = result.Result;
+            Assert.AreEqual(ProductResult.GetType(), typeof(CreatedAtActionResult));
+
+            CreatedAtActionResult createdProductResult = (CreatedAtActionResult)ProductResult;
+            Assert.IsNotNull(createdProductResult);
+            Assert.AreEqual(createdProductResult.Value.GetType(), typeof(ProductsModel));
+
+            ProductsModel ProductValue = (ProductsModel)createdProductResult.Value;
+            Assert.IsNotNull(ProductValue);
+
         }
     }
 }
