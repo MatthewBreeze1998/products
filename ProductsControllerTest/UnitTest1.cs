@@ -107,21 +107,13 @@ namespace ProductsControllerTest
             ProductsModel product = _ProductsController.getProducts(2).Value;
             Assert.IsNotNull(product);
 
-            
+            _ProductsController.DeleteProdcuts(product);
 
-            ActionResult<ProductsModel> result = _ProductsController;
+            ActionResult<ProductsModel> result = _ProductsController.getProducts(product.ProductId);
             Assert.IsNotNull(result);
 
             ActionResult ProductResult = result.Result;
-            Assert.AreEqual(ProductResult.GetType(), typeof(CreatedAtActionResult));
-
-            CreatedAtActionResult createdProductResult = (CreatedAtActionResult)ProductResult;
-            Assert.IsNotNull(createdProductResult);
-            Assert.AreEqual(createdProductResult.Value.GetType(), typeof(ProductsModel));
-
-            ProductsModel ProductValue = (ProductsModel)createdProductResult.Value;
-            Assert.IsNotNull(ProductValue);
-
+            Assert.AreEqual(ProductResult.GetType(), typeof(BadRequestResult));
         }
     }
 }
