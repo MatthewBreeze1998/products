@@ -36,6 +36,22 @@ namespace Could_System_dev_ops.Controllers
             return _ProductsRepo.CreateProduct(product); // calls xreate in interface and returns the new product
 
         }
+
+        public ActionResult<ProductsModel> DeleteProdcuts(ProductsModel product)
+        {
+
+            if (product == null)// checks if Products is null
+            {
+                return BadRequest();// not found if null
+            }
+            if (product.ProductId <= 0)// checks valid id
+            {
+
+                return BadRequest();
+            }
+            return _ProductsRepo.DeleteProducts(product); // calls Delete in interface and returns the new product
+
+        }
         [Route("EditProducts")]//Route
         [HttpPost]
         public ActionResult<ProductsModel> EditProduct(ProductsModel product)

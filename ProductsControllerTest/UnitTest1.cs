@@ -109,7 +109,7 @@ namespace ProductsControllerTest
 
             
 
-            ActionResult<ProductsModel> result = _ProductsController.;
+            ActionResult<ProductsModel> result = _ProductsController;
             Assert.IsNotNull(result);
 
             ActionResult ProductResult = result.Result;

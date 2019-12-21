@@ -47,5 +47,12 @@ namespace Could_System_dev_ops.Repo
             return _ProductsModelsList[_ProductsModelsList.IndexOf(_ProductsModelsList.FirstOrDefault(x => x.ProductId == products.ProductId))] = products;
             // finds the product with the id then replaces the index with the new product model thats passed through
         }
+
+        public ProductsModel DeleteProducts(ProductsModel Product)
+        {
+            _ProductsModelsList.Remove(_ProductsModelsList.FirstOrDefault(x => Product.ProductId == x.ProductId)); // finds first staff with given id then removes them form the fake data
+            return Product;
+        
+        }
     }
 }
