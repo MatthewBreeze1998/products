@@ -100,7 +100,7 @@ namespace ProductsControllerTest
             Assert.AreNotEqual(product.StockLevel, ProductValue.StockLevel);
         }
         [Test]
-        public void DeleteProduct_validProduct_ShouldObject()
+        public void DeleteProduct_valid_ShouldObject()
         {
             Assert.IsNotNull(_ProductsRepo);
             Assert.IsNotNull(_ProductsController);
@@ -110,6 +110,21 @@ namespace ProductsControllerTest
             _ProductsController.DeleteProdcuts(product);
 
             ActionResult<ProductsModel> result = _ProductsController.getProducts(product.ProductId);
+            Assert.IsNotNull(result);
+
+            ActionResult ProductResult = result.Result;
+            Assert.AreEqual(ProductResult.GetType(), typeof(BadRequestResult));
+        }
+
+        [Test]
+        public void DeleteProduct_invalid_ShouldObject()
+        {
+            Assert.IsNotNull(_ProductsRepo);
+            Assert.IsNotNull(_ProductsController);
+            ProductsModel product = null;
+            Assert.IsNotNull(product);
+
+            ActionResult<ProductsModel> result = _ProductsController.DeleteProdcuts(product); 
             Assert.IsNotNull(result);
 
             ActionResult ProductResult = result.Result;
