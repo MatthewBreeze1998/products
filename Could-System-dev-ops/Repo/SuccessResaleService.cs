@@ -14,6 +14,4 @@ namespace Could_System_dev_ops.Repo
             return Task.FromResult(reSale);
         }
     }
-
-
 }

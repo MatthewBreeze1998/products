@@ -10,8 +10,7 @@ namespace Could_System_dev_ops.Repo
 {
   public class LocalHostReSaleService : IReSaleRepositry
     {
-
-        private readonly HttpClient _client;
+         private readonly HttpClient _client;
 
         public LocalHostReSaleService(HttpClient client)
         {
@@ -28,12 +27,5 @@ namespace Could_System_dev_ops.Repo
             return JsonConvert.DeserializeObject<ReSaleMetaData>(responseContent);
             
         }
-            
-
-
-
-
-    }
-        
-       
+    }       
 }

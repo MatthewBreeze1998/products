@@ -7,9 +7,7 @@ namespace Could_System_dev_ops.Models
 {
     public class ProductsReSaleUpdate
     {
-      
       public ProductsModel product { get; set;}
-      public ReSaleMetaData ReSale { get; set; }
-    
+      public ReSaleMetaData ReSale { get; set; } 
     }
 }

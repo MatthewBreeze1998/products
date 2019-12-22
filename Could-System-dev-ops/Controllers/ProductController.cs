@@ -21,7 +21,7 @@ namespace Could_System_dev_ops.Controllers
         }
         [Route("CreatProduct")]//Route
         [HttpPost]
-        public ActionResult<ProductsModel> CreateProdcuts(ProductsModel product)
+        public ActionResult<ProductsModel> CreateProdcut(ProductsModel product)
         {
 
             if(product == null)// checks if Products is null
@@ -37,7 +37,7 @@ namespace Could_System_dev_ops.Controllers
 
         }
 
-        public ActionResult<ProductsModel> DeleteProdcuts(ProductsModel product)
+        public ActionResult<ProductsModel> DeleteProdcut(ProductsModel product)
         {
 
             if (product == null)// checks if Products is null
@@ -49,7 +49,7 @@ namespace Could_System_dev_ops.Controllers
 
                 return BadRequest();
             }
-            return _ProductsRepo.DeleteProducts(product); // calls Delete in interface and returns the new product
+            return _ProductsRepo.DeleteProduct(product); // calls Delete in interface and returns the new product
 
         }
         [Route("EditProducts")]//Route
@@ -66,14 +66,14 @@ namespace Could_System_dev_ops.Controllers
                 return NotFound();
             }
             
-            return _ProductsRepo.EditProducts(product); // calls edit fuction from interface
+            return _ProductsRepo.EditProduct(product); // calls edit fuction from interface
             // retruns edited data
         }
 
 
         [Route("GetProduct/{id}")]//Route
         [HttpGet]
-        public ActionResult<ProductsModel> getProducts(int id)
+        public ActionResult<ProductsModel> getProduct(int id)
         {
             if(id <= 0)// checks if id is valid
             {
@@ -103,7 +103,7 @@ namespace Could_System_dev_ops.Controllers
                 return NotFound();// not found if less than one
             }
             product.StockLevel = product.StockLevel + NewStock; // gets stocklevel gets new stock and adds them
-            return _ProductsRepo.EditProducts(product);// calls edit and updates the index with the new sock level
+            return _ProductsRepo.EditProduct(product);// calls edit and updates the index with the new sock level
         }
 
       
@@ -120,7 +120,7 @@ namespace Could_System_dev_ops.Controllers
             ProductsModel products = Update.product; // gives products a products model
             ReSaleMetaData Resale = Update.ReSale;// gives resale resale metadata
             products.Price = Resale.NewPrice; // changes old price to the resale price
-            return _ProductsRepo.EditProducts(products);// calls edit from interface and updates the index 
+            return _ProductsRepo.EditProduct(products);// calls edit from interface and updates the index 
         }
 
 

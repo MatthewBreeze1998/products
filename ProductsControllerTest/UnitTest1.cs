@@ -36,7 +36,7 @@ namespace ProductsControllerTest
             _ProductsRepo = new FakeProductsRepo();
 
         }
-
+        [Test]
         public void CreateProduct_validProduct_ShouldObject()
         {
             Assert.IsNotNull(_ProductsRepo);
@@ -47,7 +47,7 @@ namespace ProductsControllerTest
             int currentMaxId = _ProductsController.GetAllProducts().Max(x => x.ProductId);
             Assert.GreaterOrEqual(currentMaxId, 1);
 
-            ActionResult<ProductsModel> result = _ProductsController.CreateProdcuts(product);
+            ActionResult<ProductsModel> result = _ProductsController.CreateProdcut(product);
             Assert.IsNotNull(result);
 
             ActionResult ProductResult = result.Result;
@@ -80,7 +80,7 @@ namespace ProductsControllerTest
             int currentMaxId = _ProductsController.GetAllProducts().Max(x => x.ProductId);
             Assert.GreaterOrEqual(currentMaxId, 1);
 
-            ActionResult<ProductsModel> result = _ProductsController.CreateProdcuts(product);
+            ActionResult<ProductsModel> result = _ProductsController.CreateProdcut(product);
             Assert.IsNotNull(result);
 
             ActionResult ProductResult = result.Result;
@@ -104,12 +104,12 @@ namespace ProductsControllerTest
         {
             Assert.IsNotNull(_ProductsRepo);
             Assert.IsNotNull(_ProductsController);
-            ProductsModel product = _ProductsController.getProducts(2).Value;
+            ProductsModel product = _ProductsController.getProduct(2).Value;
             Assert.IsNotNull(product);
 
-            _ProductsController.DeleteProdcuts(product);
+            _ProductsController.DeleteProdcut(product);
 
-            ActionResult<ProductsModel> result = _ProductsController.getProducts(product.ProductId);
+            ActionResult<ProductsModel> result = _ProductsController.getProduct(product.ProductId);
             Assert.IsNotNull(result);
 
             ActionResult ProductResult = result.Result;
@@ -124,7 +124,7 @@ namespace ProductsControllerTest
             ProductsModel product = null;
             Assert.IsNotNull(product);
 
-            ActionResult<ProductsModel> result = _ProductsController.DeleteProdcuts(product); 
+            ActionResult<ProductsModel> result = _ProductsController.DeleteProdcut(product); 
             Assert.IsNotNull(result);
 
             ActionResult ProductResult = result.Result;

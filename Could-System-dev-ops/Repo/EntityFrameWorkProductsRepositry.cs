@@ -18,18 +18,17 @@ namespace Could_System_dev_ops.Repo
             _context = _scope.ServiceProvider.GetRequiredService<ProductsDataBaseContext>();
 
         }
-    public ProductsModel CreateObject(ProductsModel Object)
+        public ProductsModel CreateObject(ProductsModel Object)
         {
             _context.Products.Add(Object);
             _context.SaveChanges();
 
             return Object;
         }
-    public IEnumerable<ProductsModel> GetObject()
+        public IEnumerable<ProductsModel> GetObject()
         {
             return _context.Products;
         }
-
         public bool UpdateObject(ProductsModel Object)
         {
             try

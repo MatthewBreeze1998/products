@@ -15,9 +15,9 @@ namespace Could_System_dev_ops.Repo
 
         IEnumerable<Models.ProductsModel> GetAllProduct();
 
-        ProductsModel EditProducts(ProductsModel products);
+        ProductsModel EditProduct(ProductsModel products);
 
-        ProductsModel DeleteProducts(ProductsModel Product);
+        ProductsModel DeleteProduct(ProductsModel Product);
         
     }
 }
