@@ -18,6 +18,7 @@ namespace Could_System_dev_ops.Repo
         public FakeProductsRepo()
         {
             _ProductsModelsList = new List<ProductsModel>()
+
             {
                 new ProductsModel() {ProductId = 1,ProductName = "levi jeans", Description  =  "blue Jeans", Price = 123.12, StockLevel = 19},
                 new ProductsModel() {ProductId = 2,ProductName = "Black desk", Description  =  "Black desk", Price = 11.4 ,StockLevel = 3},
