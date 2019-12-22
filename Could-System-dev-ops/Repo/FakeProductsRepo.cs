@@ -11,7 +11,9 @@ namespace Could_System_dev_ops.Repo
     {
 
         public List<ProductsModel> _ProductsModelsList;
-        
+        public List<ProductsModel> _productTests;
+        private List<ProductsModel> productsModelsList;
+        private List<ProductsModel> productsModelsList1;
 
         public FakeProductsRepo()
         {
@@ -22,6 +24,12 @@ namespace Could_System_dev_ops.Repo
                 new ProductsModel() {ProductId = 3,ProductName = "Moniter", Description  =  "24' lg 1080p", Price = 341.41 ,StockLevel = 19}
             };// test data 
         }
+
+        public FakeProductsRepo(List<ProductsModel> productsModelsList1)
+        {
+            this.productsModelsList1 = productsModelsList1;
+        }
+
         public ProductsModel CreateProduct(ProductsModel products)
         {
             
