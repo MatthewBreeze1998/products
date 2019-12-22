@@ -26,14 +26,15 @@ namespace Could_System_dev_ops.Controllers
 
             if(product == null)// checks if Products is null
             {
-                return NotFound();// not found if null
+                return BadRequest();// Badresult 
             }
             if (product.ProductId <= 0)// checks valid id
             {
          
-                return NotFound();
+                return BadRequest();
             }
-            return _ProductsRepo.CreateProduct(product); // calls xreate in interface and returns the new product
+            _ProductsRepo.CreateProduct(product);
+            return CreatedAtAction(nameof(getProduct), new { id = product.ProductId },product); // calls xreate in interface and returns the new product
 
         }
 
@@ -79,8 +80,8 @@ namespace Could_System_dev_ops.Controllers
             {
                 return NotFound();// not found if null
             }
-
-            return _ProductsRepo.GetProduct(id); // gets prodcut by id returns product
+            ProductsModel product = _ProductsRepo.GetProduct(id);
+            return product; // gets prodcut by id returns product
         }
         
         [Route("GetAllProducts")]//Route

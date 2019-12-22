@@ -33,20 +33,17 @@ namespace ProductsControllerTest
 
             _ProductsController = new ProductsController(_ProductsRepo);
             _ReSaleRepo = new SuccessResaleService();
-            _ProductsRepo = new FakeProductsRepo(_ProductsModelsList);
-
+            _ProductsRepo = new FakeProductsRepo();
         }
         [Test]
         public void CreateProduct_validProduct_ShouldObject()
         {
-            _ProductsRepo = new FakeProductsRepo(_ProductsModelsList);
             Assert.IsNotNull(_ProductsRepo);
             Assert.IsNotNull(_ProductsController);
             ProductsModel product = new ProductsModel() { ProductId = 4, ProductName = "levi jeans", Description = "blue Jeans", Price = 123.12, StockLevel = 19 };
             Assert.IsNotNull(product);
 
-            int currentMaxId = _ProductsController.GetAllProducts().Max(x => x.ProductId);
-            Assert.GreaterOrEqual(currentMaxId, 1);
+         
 
             ActionResult<ProductsModel> result = _ProductsController.CreateProdcut(product);
             Assert.IsNotNull(result);
@@ -61,7 +58,7 @@ namespace ProductsControllerTest
             ProductsModel ProductValue = (ProductsModel)createdProductResult.Value;
             Assert.IsNotNull(ProductValue);
 
-            Assert.AreEqual(currentMaxId + 1, ProductValue.ProductId);
+            Assert.AreEqual( product.ProductId, ProductValue.ProductId);
             Assert.AreEqual(product.ProductName, ProductValue.ProductName);
             Assert.AreEqual(product.Description, ProductValue.Description);
             Assert.AreEqual(product.Price, ProductValue.Price);
@@ -71,11 +68,8 @@ namespace ProductsControllerTest
         [Test]
         public void CreateProduct_InvalidProduct_ShouldObject()
         {
-
-
-            _ProductsRepo = new FakeProductsRepo(null);
+           
       
-
             Assert.IsNotNull(_ProductsRepo);
             Assert.IsNotNull(_ProductsController);
             ProductsModel product = null;
@@ -85,20 +79,22 @@ namespace ProductsControllerTest
             Assert.IsNotNull(result);
 
             ActionResult ProductResult = result.Result;
-            Assert.AreEqual(ProductResult.GetType(), typeof(NotFoundResult));
+            Assert.AreEqual(ProductResult.GetType(), typeof(BadRequestResult));
         }
+     
+        
         [Test]
         public void DeleteProduct_valid_ShouldObject()
         {
             Assert.IsNotNull(_ProductsRepo);
             Assert.IsNotNull(_ProductsController);
-            ProductsModel product = _ProductsController.getProduct(2).Value;
+            ProductsModel product = _ProductsController.getProduct(3).Value;
             Assert.IsNotNull(product);
 
             _ProductsController.DeleteProdcut(product);
 
             ActionResult<ProductsModel> result = _ProductsController.getProduct(product.ProductId);
-            Assert.IsNotNull(result);
+            Assert.IsNull(result);
 
             ActionResult ProductResult = result.Result;
             Assert.AreEqual(ProductResult.GetType(), typeof(BadRequestResult));
