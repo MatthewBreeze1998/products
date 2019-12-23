@@ -12,9 +12,6 @@ namespace Could_System_dev_ops.Repo
 
         public List<ProductsModel> _ProductsModelsList;
         public List<ProductsModel> _productTests;
-        private List<ProductsModel> productsModelsList;
-        private List<ProductsModel> productsModelsList1;
-
         public FakeProductsRepo()
         {
             _ProductsModelsList = new List<ProductsModel>()
@@ -33,8 +30,9 @@ namespace Could_System_dev_ops.Repo
             return products;// returrms the the new product
         }
 
-        public ProductsModel GetProduct(int id)
+        public ProductsModel GetProduct(int? id)
         {
+           
             return _ProductsModelsList.FirstOrDefault(x => id == x.ProductId);// uses id to find product
             // uses first or default to find the first product with that id
             // retruns the product

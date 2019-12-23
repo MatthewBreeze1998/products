@@ -11,7 +11,7 @@ namespace Could_System_dev_ops.Repo
     {
         ProductsModel CreateProduct(Models.ProductsModel products);
 
-        ProductsModel GetProduct(int id);
+        ProductsModel GetProduct(int? id);
 
         IEnumerable<Models.ProductsModel> GetAllProduct();
 

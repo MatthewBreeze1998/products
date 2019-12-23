@@ -88,16 +88,19 @@ namespace ProductsControllerTest
         {
             Assert.IsNotNull(_ProductsRepo);
             Assert.IsNotNull(_ProductsController);
-            ProductsModel product = _ProductsController.getProduct(3).Value;
+            ProductsModel product = new ProductsModel() { ProductId = 3, ProductName = "Moniter", Description = "24' lg 1080p", Price = 341.41, StockLevel = 19 };
             Assert.IsNotNull(product);
 
             _ProductsController.DeleteProdcut(product);
 
             ActionResult<ProductsModel> result = _ProductsController.getProduct(product.ProductId);
-            Assert.IsNull(result);
+            Assert.IsNotNull(result);
 
             ActionResult ProductResult = result.Result;
             Assert.AreEqual(ProductResult.GetType(), typeof(BadRequestResult));
+
+
+
         }
 
         [Test]

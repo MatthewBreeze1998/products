@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Could_System_dev_ops.Models;
 using Could_System_dev_ops.Repo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ namespace Could_System_dev_ops.Controllers
 {
     [Route("api/Products")]
     [ApiController]
+    [Authorize]
     public class ProductsController : Controller
     {
         private IProductsRepositry _ProductsRepo;
@@ -50,7 +52,9 @@ namespace Could_System_dev_ops.Controllers
 
                 return BadRequest();
             }
-            return _ProductsRepo.DeleteProduct(product); // calls Delete in interface and returns the new product
+            ProductsModel deletedProduct = _ProductsRepo.DeleteProduct(product);
+
+            return deletedProduct; // calls Delete in interface and returns the new product
 
         }
         [Route("EditProducts")]//Route
@@ -74,11 +78,11 @@ namespace Could_System_dev_ops.Controllers
 
         [Route("GetProduct/{id}")]//Route
         [HttpGet]
-        public ActionResult<ProductsModel> getProduct(int id)
+        public ActionResult<ProductsModel> getProduct(int? id)
         {
-            if(id <= 0)// checks if id is valid
+            if(id == null)// checks if id is valid
             {
-                return NotFound();// not found if null
+                return BadRequest();// not found if null
             }
             ProductsModel product = _ProductsRepo.GetProduct(id);
             return product; // gets prodcut by id returns product
