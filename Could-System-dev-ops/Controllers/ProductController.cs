@@ -52,9 +52,7 @@ namespace Could_System_dev_ops.Controllers
 
                 return BadRequest();
             }
-            ProductsModel deletedProduct = _ProductsRepo.DeleteProduct(product);
-
-            return deletedProduct; // calls Delete in interface and returns the new product
+            return _ProductsRepo.DeleteProduct(product); // calls Delete in interface and returns the new product
 
         }
         [Route("EditProducts")]//Route
@@ -85,7 +83,7 @@ namespace Could_System_dev_ops.Controllers
                 return BadRequest();// not found if null
             }
             ProductsModel product = _ProductsRepo.GetProduct(id);
-            return product; // gets prodcut by id returns product
+            return CreatedAtAction(nameof(getProduct), new { id = product.ProductId }, product); // gets prodcut by id returns product
         }
         
         [Route("GetAllProducts")]//Route

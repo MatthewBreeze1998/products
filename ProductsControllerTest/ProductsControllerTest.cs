@@ -93,7 +93,7 @@ namespace ProductsControllerTest
 
             _ProductsController.DeleteProdcut(product);
 
-            ActionResult<ProductsModel> result = _ProductsController.getProduct(product.ProductId);
+            ActionResult<ProductsModel> result = _ProductsController.getProduct(null);
             Assert.IsNotNull(result);
 
             ActionResult ProductResult = result.Result;
