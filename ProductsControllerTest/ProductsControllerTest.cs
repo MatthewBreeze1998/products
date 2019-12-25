@@ -43,7 +43,8 @@ namespace ProductsControllerTest
             ProductsModel product = new ProductsModel() { ProductId = 4, ProductName = "levi jeans", Description = "blue Jeans", Price = 123.12, StockLevel = 19 };
             Assert.IsNotNull(product);
 
-         
+            int currentMaxId = _ProductsController.GetAllProducts().Max(x => x.ProductId);
+            Assert.GreaterOrEqual(currentMaxId, 1);
 
             ActionResult<ProductsModel> result = _ProductsController.CreateProdcut(product);
             Assert.IsNotNull(result);
@@ -58,7 +59,7 @@ namespace ProductsControllerTest
             ProductsModel ProductValue = (ProductsModel)createdProductResult.Value;
             Assert.IsNotNull(ProductValue);
 
-            Assert.AreEqual( product.ProductId, ProductValue.ProductId);
+            Assert.AreEqual(currentMaxId, ProductValue.ProductId);
             Assert.AreEqual(product.ProductName, ProductValue.ProductName);
             Assert.AreEqual(product.Description, ProductValue.Description);
             Assert.AreEqual(product.Price, ProductValue.Price);

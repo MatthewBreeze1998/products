@@ -35,6 +35,10 @@ namespace Could_System_dev_ops.Controllers
          
                 return BadRequest();
             }
+
+            int newId = _ProductsRepo.GetAllProduct().Max(x => x.ProductId + 1);// gats max id and adds one
+            product.ProductId = newId; // sets new id
+
             _ProductsRepo.CreateProduct(product);
             return CreatedAtAction(nameof(getProduct), new { id = product.ProductId },product); // calls xreate in interface and returns the new product
 
