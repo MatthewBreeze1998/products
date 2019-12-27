@@ -19,10 +19,10 @@ namespace Could_System_dev_ops.Repo
             client.DefaultRequestHeaders.Add("Accept", "application/json");
         }
         
-        public async Task<ReSaleMetaData> GetReSale(ReSaleMetaData reSale)
+        public async Task<ReSaleMetaData> GetReSale(int? id)
         {
-            string uri = "api/ReSale/AllReSale";
-            HttpResponseMessage responseMessage = await _client.PostAsJsonAsync(uri, reSale);
+            string uri = "api/ReSale/GetReSale/{id}";
+            HttpResponseMessage responseMessage = await _client.PostAsJsonAsync(uri, id);
             string responseContent = await responseMessage.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<ReSaleMetaData>(responseContent);
             
