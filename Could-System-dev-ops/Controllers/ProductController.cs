@@ -19,9 +19,10 @@ namespace Could_System_dev_ops.Controllers
         private IReSaleRepositry _ReSaleRepo;
         public ProductsController(IProductsRepositry Products )
         {
+
             _ProductsRepo = Products;
         }
-        [Route("CreatProduct")]//Route
+        [Route("CreatProduct/")]//Route
         [HttpPost]
         public ActionResult<ProductsModel> CreateProdcut(ProductsModel product)
         {
@@ -44,22 +45,23 @@ namespace Could_System_dev_ops.Controllers
 
         }
 
-        public ActionResult<ProductsModel> DeleteProdcut(ProductsModel product)
+        public ActionResult<ProductsModel> DeleteProduct(ProductsModel Product)
         {
 
-            if (product == null)// checks if Products is null
+            if (Product == null)// checks if Products is null
             {
                 return BadRequest();// not found if null
             }
-            if (product.ProductId <= 0)// checks valid id
+            if (Product.ProductId <= 0)// checks valid id
             {
 
                 return BadRequest();
             }
-            return _ProductsRepo.DeleteProduct(product); // calls Delete in interface and returns the new product
-
+            return _ProductsRepo.DeleteProduct(Product); ; // calls Delete in interface and returns the new product
         }
-        [Route("EditProducts")]//Route
+
+
+        [Route("EditProducts/")]//Route
         [HttpPost]
         public ActionResult<ProductsModel> EditProduct(ProductsModel product)
         {
@@ -84,10 +86,15 @@ namespace Could_System_dev_ops.Controllers
         {
             if(id == null)// checks if id is valid
             {
-                return BadRequest();// not found if null
+                return NotFound();// not found if null
             }
             ProductsModel product = _ProductsRepo.GetProduct(id);
-            return CreatedAtAction(nameof(getProduct), new { id = product.ProductId }, product); // gets prodcut by id returns product
+
+            if(product == null)
+            {
+                return NotFound();
+            }
+            return product; // gets prodcut by id returns product
         }
         
         [Route("GetAllProducts")]//Route
@@ -112,34 +119,28 @@ namespace Could_System_dev_ops.Controllers
             product.StockLevel = product.StockLevel + NewStock; // gets stocklevel gets new stock and adds them
             return _ProductsRepo.EditProduct(product);// calls edit and updates the index with the new sock level
         }
-        public async Task<ProductsReSaleUpdate> GetResaleInfo(int? id)
+        public async Task<ReSaleMetaData> GetResaleInfo(ReSaleMetaData reSale)
         {
-            ProductsModel product = _ProductsRepo.GetProduct(id);
-            ReSaleMetaData reSale = await _ReSaleRepo.GetReSale(id);
-
-            ProductsReSaleUpdate update = null;
-            update.product = product;
-            update.ReSale = reSale;
-            
-            return update;
+            return await _ReSaleRepo.SetReSale(reSale); 
         }
       
         
-        [Route("SetReSale/{id}")]//Route
+        [Route("SetReSale/{Price}")]//Route
         [HttpPost]
-        public async Task<ActionResult<ProductsModel>> SetResale(int? id)
+        public ActionResult<ProductsModel> SetResale(ProductsModel product, Double Price)// get pro
         {
-            if(id == null)// checks if Update is null
+            if(product == null)// checks if Update is null
             {
                 return NotFound();// not found if null
             }
-
-
-            ProductsReSaleUpdate update = await GetResaleInfo(id);
-            ProductsModel products = update.product; // gives products a products model
-            ReSaleMetaData Resale = update.ReSale;// gives resale resale metadata
-            products.Price = Resale.NewPrice; // changes old price to the resale price
-            return _ProductsRepo.EditProduct(products);// calls edit from interface and updates the index 
+            ReSaleMetaData reSale = null;
+            reSale.ProductId = product.ProductId;
+            reSale.CurrentPrice = Price;
+            reSale.NewPrice = Price;
+            product.Price = Price; // changes old price to the resale price
+            return _ProductsRepo.EditProduct(product);// calls edit from interface and updates the index 
+            
+        
         }
 
 

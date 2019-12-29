@@ -8,6 +8,6 @@ namespace Could_System_dev_ops.Repo
 {
     public interface IReSaleRepositry
     {
-        Task<ReSaleMetaData> GetReSale(int? id);     
+        Task<ReSaleMetaData> SetReSale(ReSaleMetaData reSale);     
     }
 }

@@ -29,7 +29,11 @@ namespace Could_System_dev_ops.Repo
             _ProductsModelsList.Add(products);// products to test data
             return products;// returrms the the new product
         }
-
+        public ProductsModel DeleteProduct(ProductsModel Product)
+        {
+            _ProductsModelsList.Remove(_ProductsModelsList.FirstOrDefault(x => Product.ProductId == x.ProductId)); // finds first staff with given id then removes them form the fake data
+            return Product;
+        }
         public ProductsModel GetProduct(int? id)
         {
            
@@ -50,11 +54,6 @@ namespace Could_System_dev_ops.Repo
             // finds the product with the id then replaces the index with the new product model thats passed through
         }
 
-        public ProductsModel DeleteProduct(ProductsModel Product)
-        {
-            _ProductsModelsList.Remove(_ProductsModelsList.FirstOrDefault(x => Product.ProductId == x.ProductId)); // finds first staff with given id then removes them form the fake data
-            return Product;
-        
-        }
+   
     }
 }
