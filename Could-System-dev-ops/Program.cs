@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace Could_System_dev_ops
+namespace Cloud_System_dev_ops_System_dev_ops
 {
     public class Program
     {
