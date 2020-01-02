@@ -34,7 +34,7 @@ stages:
         command: buildAndPush
         repository: ThAmCo-Products
         dockerfile: '**/Dockerfile'
-        containerRegistry: ThAmCoRegistryService
+        containerRegistry: ThAmCoRegistry
         tags: |
           $(Build.BuildId)
           latest
