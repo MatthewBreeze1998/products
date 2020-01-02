@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cloud-Systems-dev-ops", "Could-System-dev-ops\Cloud-Systems-dev-ops.csproj", "{21DCD99E-B4B5-4433-AFC9-B8345C927162}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThAmCo-Products", "Could-System-dev-ops\ThAmCo-Products.csproj", "{21DCD99E-B4B5-4433-AFC9-B8345C927162}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductsControllerTest", "ProductsControllerTest\ProductsControllerTest.csproj", "{8BD9FB09-11A4-4B00-AFCC-04FFB5A45A1A}"
 EndProject
