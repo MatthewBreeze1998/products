@@ -1,7 +1,7 @@
-﻿using Cloud_System_dev_ops_System_dev_ops.Models;
+﻿using Cloud_System_dev_ops.Models;
 using System.Collections.Generic;
 
-namespace Cloud_System_dev_ops_System_dev_ops.Repo
+namespace Cloud_System_dev_ops.Repo
 {
     public interface IRepository<Product>
     {

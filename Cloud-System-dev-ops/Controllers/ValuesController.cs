@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Cloud_System_dev_ops_System_dev_ops.Models;
-using Cloud_System_dev_ops_System_dev_ops.Repo;
+using Cloud_System_dev_ops.Models;
+using Cloud_System_dev_ops.Repo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
-namespace Cloud_System_dev_ops_System_dev_ops.Controllers
+namespace Cloud_System_dev_ops.Controllers
 {
     [Route("api/[Controller]")]
     [ApiController]

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Cloud_System_dev_ops_System_dev_ops.Models;
+using Cloud_System_dev_ops.Models;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Cloud_System_dev_ops_System_dev_ops.Repo
+namespace Cloud_System_dev_ops.Repo
 {
    public class EntityFrameWorkProductsRepositry : IRepository<ProductsModel>
     {

@@ -1,4 +1,4 @@
-﻿using Cloud_System_dev_ops_System_dev_ops.Models;
+﻿using Cloud_System_dev_ops.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Cloud_System_dev_ops_System_dev_ops.Repo
+namespace Cloud_System_dev_ops.Repo
 {
   public class LocalHostReSaleService : IReSaleRepositry
     {

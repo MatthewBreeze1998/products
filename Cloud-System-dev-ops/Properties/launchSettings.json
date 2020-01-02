@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Cloud_System_dev_ops_System_dev_ops": {
+    "Cloud-System-dev-ops": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "api/Products/GetAllProducts",

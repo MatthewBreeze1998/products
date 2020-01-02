@@ -1,6 +1,6 @@
-using Cloud_System_dev_ops_System_dev_ops.Controllers;
-using Cloud_System_dev_ops_System_dev_ops.Models;
-using Cloud_System_dev_ops_System_dev_ops.Repo;
+using Cloud_System_dev_ops.Controllers;
+using Cloud_System_dev_ops.Models;
+using Cloud_System_dev_ops.Repo;
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 using System.Collections.Generic;
