@@ -104,21 +104,31 @@ namespace Cloud_System_dev_ops.Controllers
             return _ProductsRepo.GetAllProduct(); // call interface funcion and retuns all prodcuts as IEnumrable
         }
 
-        [Route("UpdateStock/{id,NewStock}")]//Route
+        [Route("UpdateStock/")]//Route
         [HttpPost]
-        public ActionResult<ProductsModel> UpdateStock(ProductsModel product, int NewStock)
-        {     
-            if(product == null)// checks if Products is null
+        public ActionResult<ProductsModel> UpdateStock(UpdateStockModel Stock)
+        {
+            if (Stock == null)// checks if Products is null
             {
-                return NotFound();// not found if null
+                return BadRequest();// not found if null
             }
-            if(NewStock < 1)// checks theres a new stock add
+            ProductsModel product = _ProductsRepo.GetProduct(Stock.ProductId);// product to update
+
+            if (Stock.RequestType.ToLower() == "order")// checks if its to reduce stock
             {
-                return NotFound();// not found if less than one
+                product.StockLevel = product.StockLevel - Stock.StockCount;// reduces stocks
             }
-            product.StockLevel = product.StockLevel + NewStock; // gets stocklevel gets new stock and adds them
+            else if (Stock.RequestType.ToLower() == "purchaserequest")// checks  purchase request
+            {
+                product.StockLevel = product.StockLevel + Stock.StockCount; // adds stock
+            }
+            else
+            {
+                return BadRequest();
+            }  // else bad request
             return _ProductsRepo.EditProduct(product);// calls edit and updates the index with the new sock level
         }
+        
         public async Task<ReSaleMetaData> GetResaleInfo(ReSaleMetaData reSale)
         {
             return await _ReSaleRepo.SetReSale(reSale); 
@@ -138,11 +148,7 @@ namespace Cloud_System_dev_ops.Controllers
             reSale.CurrentPrice = Price;
             reSale.NewPrice = Price;
             product.Price = Price; // changes old price to the resale price
-            return _ProductsRepo.EditProduct(product);// calls edit from interface and updates the index 
-            
-        
+            return _ProductsRepo.EditProduct(product);// calls edit from interface and updates the index  
         }
-
-
     }
 }
