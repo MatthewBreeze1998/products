@@ -15,6 +15,6 @@ namespace Cloud_System_dev_ops.Models
 
         public Double Price { get; set;}
 
-       public int StockLevel { get; set; }
+        public int StockLevel { get; set; }
     }
 }
