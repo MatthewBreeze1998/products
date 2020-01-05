@@ -14,7 +14,7 @@ namespace Cloud_System_dev_ops.Repo
 
         public LocalHostReSaleService(HttpClient client)
         {
-            client.BaseAddress = new Uri("https://localhost:5001");
+            client.BaseAddress = new Uri("https://thamco-resale.azurewebsites.net");
             client.Timeout = TimeSpan.FromSeconds(5);
             client.DefaultRequestHeaders.Add("Accept", "application/json");
         }

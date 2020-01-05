@@ -32,12 +32,12 @@ namespace Cloud_System_dev_ops
         public void ConfigureServices(IServiceCollection services)
         {
 
-            JwtSecurityTokenHandler.DefaultInboundClaimFilter.Clear();
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>
                 {
-                    options.Authority = "https://localhost:44387/";
+                    options.Authority = Configuration.GetSection("UrlConnections")["Auth"];
                     options.Audience = "Api_Link";
                 });
 
