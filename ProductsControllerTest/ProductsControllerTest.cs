@@ -13,7 +13,6 @@ namespace ProductsControllerTest
     {
         private HttpClient _client;
         private FakeProductsRepo _ProductsRepo;
-        private IReSaleRepositry _ReSaleRepo;
         private ProductsController _ProductsController;
         private List<ProductsModel> _ProductsModelsList;
         public ProdcutControllerTest()
@@ -33,7 +32,7 @@ namespace ProductsControllerTest
 
             _ProductsRepo = new FakeProductsRepo();
             _ProductsController = new ProductsController(_ProductsRepo);
-            _ReSaleRepo = new SuccessResaleService();
+           
             
         }
         [Test]
