@@ -17,23 +17,24 @@ namespace Cloud_System_dev_ops.Controllers
     {
         private IProductsRepositry _ProductsRepo;
         private IReSaleRepositry _ReSaleRepo;
-        public ProductsController(IProductsRepositry Products )
+        public ProductsController(IProductsRepositry Products)
         {
 
             _ProductsRepo = Products;
         }
         [Route("CreatProduct/")]//Route
+        [Authorize(Policy = "Staffpol")]
         [HttpPost]
         public ActionResult<ProductsModel> CreateProdcut(ProductsModel product)
         {
 
-            if(product == null)// checks if Products is null
+            if (product == null)// checks if Products is null
             {
                 return BadRequest();// Badresult 
             }
             if (product.ProductId <= 0)// checks valid id
             {
-         
+
                 return BadRequest();
             }
 
@@ -41,10 +42,11 @@ namespace Cloud_System_dev_ops.Controllers
             product.ProductId = newId; // sets new id
 
             _ProductsRepo.CreateProduct(product);
-            return CreatedAtAction(nameof(getProduct), new { id = product.ProductId },product); // calls xreate in interface and returns the new product
+            return CreatedAtAction(nameof(getProduct), new { id = product.ProductId }, product); // calls xreate in interface and returns the new product
 
         }
-
+        [Route("DeleteProduct/")]
+        [Authorize(Policy = "Manager")]
         public ActionResult<ProductsModel> DeleteProduct(ProductsModel Product)
         {
 
@@ -62,6 +64,7 @@ namespace Cloud_System_dev_ops.Controllers
 
 
         [Route("EditProducts/")]//Route
+        [Authorize(Policy = "Staffpol")]
         [HttpPost]
         public ActionResult<ProductsModel> EditProduct(ProductsModel product)
         {
@@ -103,8 +106,9 @@ namespace Cloud_System_dev_ops.Controllers
         {
             return _ProductsRepo.GetAllProduct(); // call interface funcion and retuns all prodcuts as IEnumrable
         }
-
+        
         [Route("UpdateStock/")]//Route
+        [Authorize(Policy = "Staffpol")]
         [HttpPost]
         public ActionResult<ProductsModel> UpdateStock(UpdateStockModel Stock)
         {
@@ -136,6 +140,7 @@ namespace Cloud_System_dev_ops.Controllers
       
         
         [Route("SetReSale/{Price}")]//Route
+        [Authorize(Policy = "Staffpol")]
         [HttpPost]
         public ActionResult<ProductsModel> SetResale(ProductsModel product, Double Price)// get pro
         {
