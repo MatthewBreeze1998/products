@@ -16,7 +16,7 @@ namespace Cloud_System_dev_ops.Controllers
     public class ProductsController : Controller
     {
         private IProductsRepositry _ProductsRepo;
-        private IReSaleRepositry _ReSaleRepo;
+
         public ProductsController(IProductsRepositry Products)
         {
 
@@ -133,25 +133,19 @@ namespace Cloud_System_dev_ops.Controllers
             return _ProductsRepo.EditProduct(product);// calls edit and updates the index with the new sock level
         }
         
-        public async Task<ReSaleMetaData> GetResaleInfo(ReSaleMetaData reSale)
-        {
-            return await _ReSaleRepo.SetReSale(reSale); 
-        }
+  
       
         
         [Route("SetReSale/{Price}")]//Route
         [Authorize(Policy = "Staffpol")]
         [HttpPost]
-        public ActionResult<ProductsModel> SetResale(ProductsModel product, Double Price)// get pro
+        public ActionResult<ProductsModel> SetResale(ProductsModel product, Double Price)
         {
             if(product == null)// checks if Update is null
             {
                 return NotFound();// not found if null
             }
-            ReSaleMetaData reSale = null;
-            reSale.ProductId = product.ProductId;
-            reSale.CurrentPrice = Price;
-            reSale.NewPrice = Price;
+       
             product.Price = Price; // changes old price to the resale price
             return _ProductsRepo.EditProduct(product);// calls edit from interface and updates the index  
         }

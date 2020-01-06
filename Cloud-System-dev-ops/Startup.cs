@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Polly;
 
 namespace Cloud_System_dev_ops
 {
@@ -62,17 +63,16 @@ namespace Cloud_System_dev_ops
                 options.UseSqlServer(connection);
             });
             services.AddSingleton<IProductsRepositry, FakeProductsRepo>();
-           
-            
-            if(CurrentEnvironment.IsDevelopment())
+
+            if (CurrentEnvironment.IsDevelopment())
             {
                 services.AddSingleton<IProductsRepositry, FakeProductsRepo>();
-                services.AddSingleton<IReSaleRepositry, SuccessResaleService>();
+           
             }
             else
             {
                 services.AddSingleton<IProductsRepositry, FakeProductsRepo>();
-                services.AddHttpClient<IReSaleRepositry, LocalHostReSaleService>();
+           
             }
         }
 
