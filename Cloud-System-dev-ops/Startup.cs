@@ -62,11 +62,10 @@ namespace Cloud_System_dev_ops
                 String connection = Configuration.GetConnectionString("ProductsConnectionString");
                 options.UseSqlServer(connection);
             });
-            services.AddSingleton<IProductsRepositry, FakeProductsRepo>();
 
             if (CurrentEnvironment.IsDevelopment())
             {
-                services.AddSingleton<IProductsRepositry, FakeProductsRepo>();
+                services.AddSingleton<IProductsRepositry, EntityFrameWorkProductsRepositry>();
            
             }
             else
