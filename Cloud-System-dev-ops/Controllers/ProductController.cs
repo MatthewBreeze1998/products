@@ -47,6 +47,7 @@ namespace Cloud_System_dev_ops.Controllers
         }
         [Route("DeleteProduct/")]
         [Authorize(Policy = "Manager")]
+        [HttpPost]
         public ActionResult<ProductsModel> DeleteProduct(ProductsModel Product)
         {
 
