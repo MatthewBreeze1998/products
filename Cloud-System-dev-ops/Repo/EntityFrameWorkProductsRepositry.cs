@@ -25,11 +25,26 @@ namespace Cloud_System_dev_ops.Repo
 
             return Object;
         }
+        public ProductsModel DeleteObject(ProductsModel Object)
+        {
+            try
+            {
+                _context.Products.Remove(Object);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                return Object;
+            }
+
+            return null;
+        }
+
         public IEnumerable<ProductsModel> GetObject()
         {
             return _context.Products;
         }
-        public bool UpdateObject(ProductsModel Object)
+        public ProductsModel UpdateObject(ProductsModel Object)
         {
             try
             {
@@ -38,10 +53,10 @@ namespace Cloud_System_dev_ops.Repo
             }
             catch (Exception ex)
             {
-                return false;
+                return null;
             }
 
-            return true;
+            return Object;
         }
     }
 }

@@ -65,12 +65,13 @@ namespace Cloud_System_dev_ops
 
             if (CurrentEnvironment.IsDevelopment())
             {
-                services.AddSingleton<IProductsRepositry, EntityFrameWorkProductsRepositry>();
-           
+                services.AddSingleton<IRepository<ProductsModel>, EntityFrameWorkProductsRepositry>();
+                //services.AddSingleton<IRepository<ProductsModel>, FakeProductsRepo>();
             }
             else
             {
-                services.AddSingleton<IProductsRepositry, FakeProductsRepo>();
+                services.AddSingleton<IRepository<ProductsModel>, EntityFrameWorkProductsRepositry>();
+               
            
             }
         }

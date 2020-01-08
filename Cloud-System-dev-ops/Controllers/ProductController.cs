@@ -15,14 +15,14 @@ namespace Cloud_System_dev_ops.Controllers
     [ApiController]
     public class ProductsController : Controller
     {
-        private IProductsRepositry _ProductsRepo;
+        private IRepository<ProductsModel> _ProductsRepo;
 
-        public ProductsController(IProductsRepositry Products)
+        public ProductsController(IRepository<ProductsModel> Products)
         {
 
             _ProductsRepo = Products;
         }
-        [Route("CreatProduct/")]//Route
+        [Route("CreateProduct")]//Route
         [Authorize(Policy = "Staffpol")]
         [HttpPost]
         public ActionResult<ProductsModel> CreateProdcut(ProductsModel product)
@@ -32,20 +32,13 @@ namespace Cloud_System_dev_ops.Controllers
             {
                 return BadRequest();// Badresult 
             }
-            if (product.ProductId <= 0)// checks valid id
-            {
 
-                return BadRequest();
-            }
 
-            int newId = _ProductsRepo.GetAllProduct().Max(x => x.ProductId + 1);// gats max id and adds one
-            product.ProductId = newId; // sets new id
-
-            _ProductsRepo.CreateProduct(product);
+            _ProductsRepo.CreateObject(product);
             return CreatedAtAction(nameof(getProduct), new { id = product.ProductId }, product); // calls xreate in interface and returns the new product
 
         }
-        [Route("DeleteProduct/")]
+        [Route("DeleteProduct")]
         [Authorize(Policy = "Manager")]
         [HttpPost]
         public ActionResult<ProductsModel> DeleteProduct(ProductsModel Product)
@@ -55,16 +48,25 @@ namespace Cloud_System_dev_ops.Controllers
             {
                 return BadRequest();// not found if null
             }
-            if (Product.ProductId <= 0)// checks valid id
-            {
+            ProductsModel LiveModel = _ProductsRepo.GetObject().FirstOrDefault(x => x.ProductId == Product.ProductId);
 
+            if(LiveModel == null)
+            {
                 return BadRequest();
             }
-            return _ProductsRepo.DeleteProduct(Product); ; // calls Delete in interface and returns the new product
+
+            LiveModel = _ProductsRepo.DeleteObject(LiveModel);
+
+            if (LiveModel != null)
+            {
+                return Conflict();
+            }
+
+            return LiveModel;
         }
 
 
-        [Route("EditProducts/")]//Route
+        [Route("EditProducts")]//Route
         [Authorize(Policy = "Staffpol")]
         [HttpPost]
         public ActionResult<ProductsModel> EditProduct(ProductsModel product)
@@ -73,13 +75,27 @@ namespace Cloud_System_dev_ops.Controllers
             {
                 return NotFound();// not found if null
             }
-            if(product.ProductId <= 0)// checks valid id
-            {
 
-                return NotFound();
+            ProductsModel LiveModel = _ProductsRepo.GetObject().FirstOrDefault(x => x.ProductId == product.ProductId);
+
+            if(LiveModel == null)
+            {
+                return BadRequest();
             }
+
+            LiveModel.ProductName = product.ProductName;
+            LiveModel.Description = product.Description;
+            LiveModel.Price = product.Price;
+            LiveModel.StockLevel = product.StockLevel;
+            LiveModel.SuppilerName = product.SuppilerName;
+
+            LiveModel = _ProductsRepo.UpdateObject(LiveModel);
             
-            return _ProductsRepo.EditProduct(product); // calls edit fuction from interface
+            if(LiveModel == null)
+            {
+                return Conflict();
+            }
+            return LiveModel; // calls edit fuction from interface
             // retruns edited data
         }
 
@@ -92,7 +108,8 @@ namespace Cloud_System_dev_ops.Controllers
             {
                 return NotFound();// not found if null
             }
-            ProductsModel product = _ProductsRepo.GetProduct(id);
+            
+            ProductsModel product = _ProductsRepo.GetObject().FirstOrDefault(x => x.ProductId == id);
 
             if(product == null)
             {
@@ -105,10 +122,10 @@ namespace Cloud_System_dev_ops.Controllers
         [HttpGet]
         public IEnumerable<ProductsModel> GetAllProducts()
         {
-            return _ProductsRepo.GetAllProduct(); // call interface funcion and retuns all prodcuts as IEnumrable
+            return _ProductsRepo.GetObject(); // call interface funcion and retuns all prodcuts as IEnumrable
         }
         
-        [Route("UpdateStock/")]//Route
+        [Route("UpdateStock")]//Route
         [Authorize(Policy = "Staffpol")]
         [HttpPost]
         public ActionResult<ProductsModel> UpdateStock(UpdateStockModel Stock)
@@ -117,7 +134,7 @@ namespace Cloud_System_dev_ops.Controllers
             {
                 return BadRequest();// not found if null
             }
-            ProductsModel product = _ProductsRepo.GetProduct(Stock.ProductId);// product to update
+            ProductsModel product = _ProductsRepo.GetObject().FirstOrDefault(x => x.ProductId == Stock.ProductId);// product to update
 
             if (Stock.RequestType.ToLower() == "order")// checks if its to reduce stock
             {
@@ -131,7 +148,15 @@ namespace Cloud_System_dev_ops.Controllers
             {
                 return BadRequest();
             }  // else bad request
-            return _ProductsRepo.EditProduct(product);// calls edit and updates the index with the new sock level
+
+            ProductsModel Updatededproduct = _ProductsRepo.UpdateObject(product);
+
+            if(Updatededproduct == null)
+            {
+                return Conflict();
+            }
+
+            return Updatededproduct;// calls edit and updates the index with the new sock level
         }
         
   
@@ -142,13 +167,47 @@ namespace Cloud_System_dev_ops.Controllers
         [HttpPost]
         public ActionResult<ProductsModel> SetResale(ProductsModel product, Double Price)
         {
+
+
+
             if(product == null)// checks if Update is null
             {
-                return NotFound();// not found if null
+                return BadRequest();// not found if null
             }
-       
-            product.Price = Price; // changes old price to the resale price
-            return _ProductsRepo.EditProduct(product);// calls edit from interface and updates the index  
+
+            if(Price <= 0)
+            {
+                return BadRequest();
+            }
+
+            ProductsModel liveModel = _ProductsRepo.GetObject().FirstOrDefault(x => x.ProductId == product.ProductId);
+            if(liveModel == null)
+            {
+                return BadRequest();
+            }
+
+            liveModel.ProductId = product.ProductId;
+            liveModel.ProductName = product.ProductName;
+            liveModel.Description = product.Description;
+            liveModel.Price = product.Price;
+            liveModel.StockLevel = product.StockLevel;
+            liveModel.SuppilerName = product.SuppilerName;
+
+            product.Price = Price;
+            
+            ProductsModel UpdaatedPrice = _ProductsRepo.UpdateObject(product);
+
+            if(UpdaatedPrice == null)
+            {
+                return Conflict();
+            }
+
+            if(UpdaatedPrice.Price != Price)
+            {
+                return Conflict();
+            }
+             // changes old price to the resale price
+            return UpdaatedPrice;// calls edit from interface and updates the index  
         }
     }
 }

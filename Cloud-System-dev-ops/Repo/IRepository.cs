@@ -3,12 +3,13 @@ using System.Collections.Generic;
 
 namespace Cloud_System_dev_ops.Repo
 {
-    public interface IRepository<Product>
+    public interface IRepository<T>
     {
-        bool UpdateObject(ProductsModel Object);
+        T UpdateObject(T Object);
 
-        ProductsModel CreateObject(ProductsModel Object);
+        T CreateObject(T Object);
 
-        IEnumerable<Models.ProductsModel> GetObject();
+        IEnumerable<T> GetObject();
+        T DeleteObject(T Object);
     }
 }

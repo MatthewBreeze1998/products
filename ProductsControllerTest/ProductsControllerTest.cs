@@ -12,7 +12,7 @@ namespace ProductsControllerTest
     public class ProdcutControllerTest
     {
         private HttpClient _client;
-        private FakeProductsRepo _ProductsRepo;
+        private IRepository<ProductsModel> _ProductsRepo;
         private ProductsController _ProductsController;
         private List<ProductsModel> _ProductsModelsList;
         public ProdcutControllerTest()
@@ -25,9 +25,9 @@ namespace ProductsControllerTest
         {
             _ProductsModelsList = new List<ProductsModel>()
             {
-                new ProductsModel() {ProductId = 1,ProductName = "levi jeans", Description  =  "blue Jeans", Price = 123.12, StockLevel = 19},
-                new ProductsModel() {ProductId = 2,ProductName = "Black desk", Description  =  "Black desk", Price = 11.4 ,StockLevel = 3},
-                new ProductsModel() {ProductId = 3,ProductName = "Moniter", Description  =  "24' lg 1080p", Price = 341.41 ,StockLevel = 19}
+                new ProductsModel() {ProductId = 1,ProductName = "levi jeans", Description  =  "blue Jeans", Price = 123.12, StockLevel = 19, SuppilerName = ""},
+                new ProductsModel() {ProductId = 2,ProductName = "Black desk", Description  =  "Black desk", Price = 11.4 ,StockLevel = 3, SuppilerName = ""},
+                new ProductsModel() {ProductId = 3,ProductName = "Moniter", Description  =  "24' lg 1080p", Price = 341.41 ,StockLevel = 19, SuppilerName = ""}
             };// test data 
 
             _ProductsRepo = new FakeProductsRepo();
@@ -90,14 +90,16 @@ namespace ProductsControllerTest
 
                 Assert.IsNotNull(_ProductsRepo);// not null repo
                 Assert.IsNotNull(_ProductsController);// not null controller;
-                ProductsModel DeleteProduct = new ProductsModel() { ProductId = 2, ProductName = "Black desk", Description = "Black desk", Price = 11.4, StockLevel = 3 };// valid product model
+                ProductsModel DeleteProduct = new ProductsModel() { ProductId = 1, ProductName = "levi jeans", Description = "blue Jeans", Price = 123.12, StockLevel = 19, SuppilerName = "" };
                 Assert.IsNotNull(DeleteProduct);// DeleteProduct is not null
+
+                ActionResult<ProductsModel> getproduct  = _ProductsController.getProduct(DeleteProduct.ProductId);
+                Assert.IsNotNull(getproduct);// is nit null
 
                 ActionResult<ProductsModel> product = _ProductsController.DeleteProduct(DeleteProduct); // product is the return of DeleteProduct
                 Assert.IsNotNull(product);// product is not null 
-                Assert.IsNotNull(product.Value);// product. value is not null
 
-                ActionResult<ProductsModel> result = _ProductsController.getProduct(product.Value.ProductId);// result is result of get product
+                ActionResult<ProductsModel> result = _ProductsController.getProduct(DeleteProduct.ProductId);// result is result of get product
                 Assert.IsNotNull(result);// is nit null
 
                 ActionResult StaffResult = result.Result;//StaffResult is result.result

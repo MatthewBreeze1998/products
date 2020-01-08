@@ -6,54 +6,64 @@ using Cloud_System_dev_ops.Models;
 
 namespace Cloud_System_dev_ops.Repo
 {
-    public class FakeProductsRepo : IProductsRepositry
+    public class FakeProductsRepo : IRepository<ProductsModel>
     
     {
 
         public List<ProductsModel> _ProductsModelsList;
-        public List<ProductsModel> _productTests;
         public FakeProductsRepo()
         {
             _ProductsModelsList = new List<ProductsModel>()
 
             {
-                new ProductsModel() {ProductId = 1,ProductName = "levi jeans", Description  =  "blue Jeans", Price = 123.12, StockLevel = 19},
-                new ProductsModel() {ProductId = 2,ProductName = "Black desk", Description  =  "Black desk", Price = 11.4 ,StockLevel = 3},
-                new ProductsModel() {ProductId = 3,ProductName = "Moniter", Description  =  "24' lg 1080p", Price = 341.41 ,StockLevel = 19}
+                new ProductsModel() {ProductId = 1,ProductName = "levi jeans", Description  =  "blue Jeans", Price = 123.12, StockLevel = 19, SuppilerName = ""},
+                new ProductsModel() {ProductId = 2,ProductName = "Black desk", Description  =  "Black desk", Price = 11.4 ,StockLevel = 3, SuppilerName = ""},
+                new ProductsModel() {ProductId = 3,ProductName = "Moniter", Description  =  "24' lg 1080p", Price = 341.41 ,StockLevel = 19, SuppilerName = ""}
             };// test data 
         }
         
 
-        public ProductsModel CreateProduct(ProductsModel products)
+        public ProductsModel CreateObject(ProductsModel product)
         {
-            _ProductsModelsList.Add(products);// products to test data
-            return products;// returrms the the new product
+
+            product.ProductId = GetNextId();
+            _ProductsModelsList.Add(product);// products to test data
+            return product;// returrms the the new product
         }
-        public ProductsModel DeleteProduct(ProductsModel Product)
+        public ProductsModel DeleteObject(ProductsModel Product)
         {
-            _ProductsModelsList.Remove(_ProductsModelsList.FirstOrDefault(x => Product.ProductId == x.ProductId)); // finds first staff with given id then removes them form the fake data
+            _ProductsModelsList.Remove(_ProductsModelsList.FirstOrDefault(x =>   x.ProductId == Product.ProductId)); // finds first staff with given id then removes them form the fake data
             return Product;
         }
-        public ProductsModel GetProduct(int? id)
-        {
-           
-            return _ProductsModelsList.FirstOrDefault(x => id == x.ProductId);// uses id to find product
-            // uses first or default to find the first product with that id
-            // retruns the product
-        }
 
-        public IEnumerable<ProductsModel> GetAllProduct()
+        public IEnumerable<ProductsModel> GetObject()
         {
             return _ProductsModelsList.AsEnumerable<ProductsModel>(); // retuns all prodcuts and returns them as an IEnumerable
         }
 
-        public ProductsModel EditProduct(ProductsModel products)
+        public ProductsModel UpdateObject(ProductsModel product)
         {
-            
-            return _ProductsModelsList[_ProductsModelsList.IndexOf(_ProductsModelsList.FirstOrDefault(x => x.ProductId == products.ProductId))] = products;
-            // finds the product with the id then replaces the index with the new product model thats passed through
-        }
+            ProductsModel inMemory = _ProductsModelsList.FirstOrDefault(x => x.ProductId == product.ProductId);
 
-   
+            if(inMemory == null )
+            {
+                return null;
+            }
+            try
+            {
+                int index = _ProductsModelsList.IndexOf(inMemory);
+                _ProductsModelsList[index] = product;
+                return product;
+
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
+        }
+        private int GetNextId()
+        {
+            return (_ProductsModelsList == null || _ProductsModelsList.Count() == 0) ? 1 : _ProductsModelsList.Max(x => x.ProductId) + 1;
+        }
     }
 }
