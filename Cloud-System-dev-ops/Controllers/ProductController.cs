@@ -149,6 +149,7 @@ namespace Cloud_System_dev_ops.Controllers
                 return BadRequest();
             }  // else bad request
 
+
             ProductsModel Updatededproduct = _ProductsRepo.UpdateObject(product);
 
             if(Updatededproduct == null)
@@ -186,28 +187,26 @@ namespace Cloud_System_dev_ops.Controllers
                 return BadRequest();
             }
 
-            liveModel.ProductId = product.ProductId;
+           
             liveModel.ProductName = product.ProductName;
             liveModel.Description = product.Description;
-            liveModel.Price = product.Price;
             liveModel.StockLevel = product.StockLevel;
             liveModel.SuppilerName = product.SuppilerName;
+            liveModel.Price = Price;
 
-            product.Price = Price;
-            
-            ProductsModel UpdaatedPrice = _ProductsRepo.UpdateObject(product);
+            liveModel = _ProductsRepo.UpdateObject(liveModel);
 
-            if(UpdaatedPrice == null)
+            if(liveModel == null)
             {
                 return Conflict();
             }
 
-            if(UpdaatedPrice.Price != Price)
+            if(liveModel.Price != Price)
             {
                 return Conflict();
             }
              // changes old price to the resale price
-            return UpdaatedPrice;// calls edit from interface and updates the index  
+            return liveModel;// calls edit from interface and updates the index  
         }
     }
 }
