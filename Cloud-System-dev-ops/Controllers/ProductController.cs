@@ -33,8 +33,13 @@ namespace Cloud_System_dev_ops.Controllers
                 return BadRequest();// Badresult 
             }
 
+            ProductsModel livemodel = _ProductsRepo.CreateObject(product); 
 
-            _ProductsRepo.CreateObject(product);
+            if(livemodel == null)
+            {
+                return BadRequest();
+            }
+                     
             return CreatedAtAction(nameof(getProduct), new { id = product.ProductId }, product); // calls xreate in interface and returns the new product
 
         }
@@ -149,7 +154,6 @@ namespace Cloud_System_dev_ops.Controllers
                 return BadRequest();
             }  // else bad request
 
-
             ProductsModel Updatededproduct = _ProductsRepo.UpdateObject(product);
 
             if(Updatededproduct == null)
@@ -168,9 +172,6 @@ namespace Cloud_System_dev_ops.Controllers
         [HttpPost]
         public ActionResult<ProductsModel> SetResale(ProductsModel product, Double Price)
         {
-
-
-
             if(product == null)// checks if Update is null
             {
                 return BadRequest();// not found if null
@@ -182,29 +183,21 @@ namespace Cloud_System_dev_ops.Controllers
             }
 
             ProductsModel liveModel = _ProductsRepo.GetObject().FirstOrDefault(x => x.ProductId == product.ProductId);
+           
             if(liveModel == null)
             {
                 return BadRequest();
             }
 
-           
-            liveModel.ProductName = product.ProductName;
-            liveModel.Description = product.Description;
-            liveModel.StockLevel = product.StockLevel;
-            liveModel.SuppilerName = product.SuppilerName;
             liveModel.Price = Price;
 
             liveModel = _ProductsRepo.UpdateObject(liveModel);
 
-            if(liveModel == null)
+            if(liveModel == null || liveModel.Price != Price)
             {
                 return Conflict();
             }
 
-            if(liveModel.Price != Price)
-            {
-                return Conflict();
-            }
              // changes old price to the resale price
             return liveModel;// calls edit from interface and updates the index  
         }
