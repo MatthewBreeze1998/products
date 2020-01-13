@@ -17,7 +17,7 @@ namespace Could_System_dev_ops.Migrations
                     Description = table.Column<string>(nullable: true),
                     Price = table.Column<double>(nullable: false),
                     StockLevel = table.Column<int>(nullable: false),
-                    SuppilerName = table.Column<string>(nullable: true)
+                    SupplierName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
