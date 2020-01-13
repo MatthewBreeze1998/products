@@ -92,7 +92,7 @@ namespace Cloud_System_dev_ops.Controllers
             LiveModel.Description = product.Description;
             LiveModel.Price = product.Price;
             LiveModel.StockLevel = product.StockLevel;
-            LiveModel.SuppilerName = product.SuppilerName;
+            LiveModel.SupplierName = product.SupplierName;
 
             LiveModel = _ProductsRepo.UpdateObject(LiveModel);
             

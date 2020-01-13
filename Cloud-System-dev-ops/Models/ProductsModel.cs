@@ -19,6 +19,6 @@ namespace Cloud_System_dev_ops.Models
 
         public int StockLevel { get; set; }
 
-        public String SuppilerName { get; set; }
+        public String SupplierName { get; set; }
     }
 }

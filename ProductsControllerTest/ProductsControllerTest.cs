@@ -25,9 +25,9 @@ namespace ProductsControllerTest
         {
             _ProductsModelsList = new List<ProductsModel>()
             {
-                new ProductsModel() {ProductId = 1,ProductName = "levi jeans", Description  =  "blue Jeans", Price = 123.12, StockLevel = 19, SuppilerName = ""},
-                new ProductsModel() {ProductId = 2,ProductName = "Black desk", Description  =  "Black desk", Price = 11.4 ,StockLevel = 3, SuppilerName = ""},
-                new ProductsModel() {ProductId = 3,ProductName = "Moniter", Description  =  "24' lg 1080p", Price = 341.41 ,StockLevel = 19, SuppilerName = ""}
+                new ProductsModel() {ProductId = 1,ProductName = "levi jeans", Description  =  "blue Jeans", Price = 123.12, StockLevel = 19, SupplierName = ""},
+                new ProductsModel() {ProductId = 2,ProductName = "Black desk", Description  =  "Black desk", Price = 11.4 ,StockLevel = 3, SupplierName = ""},
+                new ProductsModel() {ProductId = 3,ProductName = "Moniter", Description  =  "24' lg 1080p", Price = 341.41 ,StockLevel = 19, SupplierName = ""}
             };// test data 
 
             _ProductsRepo = new FakeProductsRepo();
@@ -90,7 +90,7 @@ namespace ProductsControllerTest
 
             Assert.IsNotNull(_ProductsRepo);// not null repo
             Assert.IsNotNull(_ProductsController);// not null controller;
-            ProductsModel DeleteProduct = new ProductsModel() { ProductId = 1, ProductName = "levi jeans", Description = "blue Jeans", Price = 123.12, StockLevel = 19, SuppilerName = "" };
+            ProductsModel DeleteProduct = new ProductsModel() { ProductId = 1, ProductName = "levi jeans", Description = "blue Jeans", Price = 123.12, StockLevel = 19, SupplierName = "" };
             Assert.IsNotNull(DeleteProduct);// DeleteProduct is not null
 
             ActionResult<ProductsModel> getproduct = _ProductsController.getProduct(DeleteProduct.ProductId);
@@ -125,7 +125,7 @@ namespace ProductsControllerTest
         {
             Assert.IsNotNull(_ProductsRepo);// not null repo
             Assert.IsNotNull(_ProductsController);// not null controller;
-            ProductsModel product = new ProductsModel() { ProductId = 1, ProductName = "levi jeans", Description = "blue Jeans", Price = 123.12, StockLevel = 19, SuppilerName = "" };// users is a valid user 
+            ProductsModel product = new ProductsModel() { ProductId = 1, ProductName = "levi jeans", Description = "blue Jeans", Price = 123.12, StockLevel = 19, SupplierName = "" };// users is a valid user 
             Assert.IsNotNull(product);// user is not null
 
             ActionResult<ProductsModel> result = _ProductsController.getProduct(product.ProductId).Value;// result is the value of the get user controller function 
@@ -139,7 +139,7 @@ namespace ProductsControllerTest
             Assert.AreEqual(product.ProductName, productResult.ProductName);//checks if it matches
             Assert.AreEqual(product.Price, productResult.Price);//checks if it matches
             Assert.AreEqual(product.StockLevel, productResult.StockLevel);//checks if it matches
-            Assert.AreEqual(product.SuppilerName, productResult.SuppilerName);//checks if it matches
+            Assert.AreEqual(product.SupplierName, productResult.SupplierName);//checks if it matches
             Assert.AreEqual(product.Description, productResult.Description);//checks if it matches
         }
 
@@ -163,7 +163,7 @@ namespace ProductsControllerTest
         {
             Assert.IsNotNull(_ProductsRepo);// not null repo
             Assert.IsNotNull(_ProductsController);// not null controller;
-            ProductsModel product = new ProductsModel() { ProductId = 1, ProductName = "levi jeans", Description = "blue Jeans", Price = 123.12, StockLevel = 19, SuppilerName = "" };// users is a valid user 
+            ProductsModel product = new ProductsModel() { ProductId = 1, ProductName = "levi jeans", Description = "blue Jeans", Price = 123.12, StockLevel = 19, SupplierName = "" };// users is a valid user 
             Assert.IsNotNull(product);// user is not null
 
             product.ProductName = "jack and jone";// change lastname
@@ -241,7 +241,7 @@ namespace ProductsControllerTest
         {
             Assert.IsNotNull(_ProductsRepo);// not null repo
             Assert.IsNotNull(_ProductsController);// not null controller;
-            ProductsModel product = new ProductsModel() { ProductId = 1, ProductName = "levi jeans", Description = "blue Jeans", Price = 123.12, StockLevel = 19, SuppilerName = "" };// users is a valid user 
+            ProductsModel product = new ProductsModel() { ProductId = 1, ProductName = "levi jeans", Description = "blue Jeans", Price = 123.12, StockLevel = 19, SupplierName = "" };// users is a valid user 
             Assert.IsNotNull(product);// user is not null
 
             double price = 100.00;
